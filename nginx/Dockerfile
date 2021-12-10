@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM craftcms/php-fpm:${PHP_VERSION}
+FROM mutationdigitale/php-fpm:${PHP_VERSION}
 
 ARG NGINX_CONF=default.conf
 
