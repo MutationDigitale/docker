@@ -2,9 +2,6 @@ ARG PHP_VERSION
 ARG PROJECT_TYPE
 FROM mutationdigitale/${PROJECT_TYPE}:${PHP_VERSION}
 
-# disable opcache
-ENV PHP_OPCACHE_ENABLE=0
-
 USER root
 
 COPY craft-cms-xdebug.ini /usr/local/etc/php/conf.d/
@@ -13,14 +10,14 @@ RUN set -ex \
     && apk upgrade --no-cache \
     && apk --no-cache add --virtual .build-deps $PHPIZE_DEPS \
     && apk --no-cache add \
+    bash \
     git \
     mariadb-connector-c \
     mysql-client \
     nodejs \
     npm \
     postgresql-client \
-    # TODO: remove --force when pecl xdebug supports 8.1
-    && pecl install --force xdebug \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && apk del --no-network .build-deps
 
