@@ -5,7 +5,7 @@ FROM alpine:3.13 AS iconv-build
 RUN apk upgrade --no-cache \
     && apk add --no-cache gnu-libiconv
 
-FROM php:${PHP_VERSION}-${PROJECT_TYPE}-alpine
+FROM php:${PHP_VERSION}-${PROJECT_TYPE}-alpine3.16
 
 # setup general options for environment variables
 ARG PHP_MEMORY_LIMIT_ARG="256M"
@@ -55,6 +55,7 @@ RUN set -ex \
     $MOZJPEG_BUILD_DEPS \
     freetype-dev \
     icu-dev \
+    icu-data-full \
     libwebp-dev \
     imagemagick-dev \
     libjpeg-turbo-dev \
@@ -136,7 +137,7 @@ RUN mkdir -p /app
 # set the permissions on the
 RUN chown -R www-data:www-data /app
 
-# set the working directory for conveinence
+# set the working directory for convenience
 WORKDIR /app
 
 # run container as the www-data user

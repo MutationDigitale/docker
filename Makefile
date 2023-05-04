@@ -1,6 +1,6 @@
 .PHONY: build
 
-LOCAL_PHP_VERSION ?= 8.0
+LOCAL_PHP_VERSION ?= 8.1
 
 build: all-cli all-cli-dev all-php-fpm all-php-fpm-dev all-nginx all-nginx-dev
 
@@ -13,10 +13,6 @@ all-cli:
 		--build-arg PHP_VERSION=8.0 \
 		--build-arg PROJECT_TYPE=cli \
 		-t mutationdigitale/cli:8.0 8.0
-	docker buildx build --load --platform linux/amd64 --builder all-platforms \
-		--build-arg PHP_VERSION=7.4 \
-		--build-arg PROJECT_TYPE=cli \
-		-t mutationdigitale/cli:7.4 7.4
 
 all-cli-dev:
 	docker buildx build --load --platform linux/amd64 --builder all-platforms \
@@ -29,11 +25,6 @@ all-cli-dev:
 		--build-arg PHP_VERSION=8.0 \
 		--build-arg PROJECT_TYPE=cli \
 		-t mutationdigitale/cli:8.0-dev 8.0
-	docker buildx build --load --platform linux/amd64 --builder all-platforms \
-		-f 7.4/dev.Dockerfile \
-		--build-arg PHP_VERSION=7.4 \
-		--build-arg PROJECT_TYPE=cli \
-		-t mutationdigitale/cli:7.4-dev 7.4
 
 all-php-fpm:
 	docker buildx build --load --platform linux/amd64 --builder all-platforms \
@@ -44,10 +35,6 @@ all-php-fpm:
 		--build-arg PHP_VERSION=8.0 \
 		--build-arg PROJECT_TYPE=fpm \
 		-t mutationdigitale/php-fpm:8.0 8.0
-	docker buildx build --load --platform linux/amd64 --builder all-platforms \
-		--build-arg PHP_VERSION=7.4 \
-		--build-arg PROJECT_TYPE=fpm \
-		-t mutationdigitale/php-fpm:7.4 7.4
 
 all-php-fpm-dev:
 	docker buildx build --load --platform linux/amd64 --builder all-platforms \
@@ -60,11 +47,6 @@ all-php-fpm-dev:
 		--build-arg PHP_VERSION=8.0 \
 		--build-arg PROJECT_TYPE=php-fpm \
 		-t mutationdigitale/php-fpm:8.0-dev 8.0
-	docker buildx build --load --platform linux/amd64 --builder all-platforms \
-		-f 7.4/dev.Dockerfile \
-		--build-arg PHP_VERSION=7.4 \
-		--build-arg PROJECT_TYPE=php-fpm \
-		-t mutationdigitale/php-fpm:7.4-dev 7.4
 
 all-nginx:
 	docker buildx build --load --platform linux/amd64 --builder all-platforms \
@@ -73,9 +55,6 @@ all-nginx:
 	docker buildx build --load --platform linux/amd64 --builder all-platforms \
 		--build-arg PHP_VERSION=8.0 \
 		-t mutationdigitale/nginx:8.0 nginx
-	docker buildx build --load --platform linux/amd64 --builder all-platforms \
-		--build-arg PHP_VERSION=7.4 \
-		-t mutationdigitale/nginx:7.4 nginx
 
 
 all-nginx-dev:
@@ -87,10 +66,6 @@ all-nginx-dev:
 		--build-arg PHP_VERSION=8.0 \
 		--build-arg NGINX_CONF=dev.default.conf \
 		-t mutationdigitale/nginx:8.0-dev nginx
-	docker buildx build --load --platform linux/amd64 --builder all-platforms \
-		--build-arg PHP_VERSION=7.4 \
-		--build-arg NGINX_CONF=dev.default.conf \
-		-t mutationdigitale/nginx:7.4-dev nginx
 
 setup:
 	docker buildx create --name all-platforms --platform linux/amd64,linux/arm64

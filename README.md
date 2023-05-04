@@ -24,8 +24,6 @@ The `php-fpm` image is provided as the base image (and is also used for the `ngi
 | `mutationdigitale/php-fpm:8.1-dev` | web | `development` |      |
 | `mutationdigitale/php-fpm:8.0`  | web | `production`  |        |
 | `mutationdigitale/php-fpm:8.0-dev` | web | `development` |        |
-| `mutationdigitale/php-fpm:7.4`  | web | `production`  |        |
-| `mutationdigitale/php-fpm:7.4-dev` | web | `development` |        |
 
 ### Nginx
 
@@ -37,8 +35,6 @@ The `nginx` image is used for a typical installation and includes an Nginx serve
 | `mutationdigitale/nginx:8.1-dev` | web | `development` |      |
 | `mutationdigitale/nginx:8.0`     | web | `production`  |        |
 | `mutationdigitale/nginx:8.0-dev` | web | `development` |        |
-| `mutationdigitale/nginx:7.4`     | web | `production`  |        |
-| `mutationdigitale/nginx:7.4-dev` | web | `development` |        |
 
 ### cli
 
@@ -50,8 +46,6 @@ The image type `cli` which is used to run queues, migrations, etc. and the image
 | `mutationdigitale/cli:8.1-dev` | web | `development` |      |
 | `mutationdigitale/cli:8.0`  | web | `production`  |        |
 | `mutationdigitale/cli:8.0-dev` | web | `development` |        |
-| `mutationdigitale/cli:7.4`  | web | `production`  |        |
-| `mutationdigitale/cli:7.4-dev` | web | `development` |        |
 
 ## Usage
 
@@ -104,7 +98,7 @@ The image is designed to be run by a `www-data` user that owns of the image’s 
 
 ## Running Locally with Docker Compose
 
-We recommend running Docker locally if you’re shipping your project to a Docker-based envrionment such as Amazon Web Services Elastic Container Services (ECS). The following Docker Compose file will setup your local environment with the following:
+We recommend running Docker locally if you’re shipping your project to a Docker-based environment such as Amazon Web Services Elastic Container Services (ECS). The following Docker Compose file will setup your local environment with the following:
 
 1. `web` service that will handle running PHP and Nginx
 2. `postgres` service that will store your content
@@ -154,7 +148,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready"]
+      test: ["CMD", "pg_isready", "-U", "craftcms", "-d", "dev_craftcms"]
       interval: 5s
       retries: 3
 
